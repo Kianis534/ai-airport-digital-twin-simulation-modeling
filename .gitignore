@@ -1,0 +1,51 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Data and Artifacts (Protecting large files and models)
+datasets/raw/
+outputs/
+*.pkl
+*.joblib
+*.h5
+*.onnx
+*.pb
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Logs and Databases
+*.log
+*.sqlite
+*.db
+
+# Frontend (Next.js)
+frontend_nextjs/.next/
+frontend_nextjs/node_modules/
+frontend_nextjs/out/
+frontend_nextjs/build/
+.next/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Reports and temporary files
+reports/*.pdf
+reports/*.docx
+temp/
+tmp/
+
+# Dataset removed due to large file size 
+
+datasets/raw/
+datasets/dataset_1_flights.csv
