@@ -1,97 +1,184 @@
 # ✈️ AI Airport Operations Digital Twin System
 
-An AI-powered digital twin that simulates airport operations using Machine Learning, Deep Learning, and Discrete Event Simulation. The system predicts flight delays, passenger satisfaction, and traffic demand while providing a real-time what-if analysis dashboard.
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green.svg)](https://fastapi.tiangolo.com/)
+[![Next.js](https://img.shields.io/badge/Frontend-Next.js-black.svg)](https://nextjs.org/)
+[![ML](https://img.shields.io/badge/AI-XGBoost%20%7C%20LSTM-orange.svg)]()
+
+A production-grade **Digital Twin** designed to simulate, predict, and optimize airport operations. By integrating **Discrete Event Simulation (SimPy)** with **Deep Learning (LSTM)** and **Gradient Boosting (XGBoost)**, the system enables airport operators to conduct "What-If" analysis on infrastructure changes and passenger load surges.
 
 ---
 
-## 🚀 Project Overview
+## 🏗️ System Architecture
 
-This project simulates real-world airport operations including passenger flow, check-in, security, immigration, and boarding processes. It integrates ML models and simulation to analyze and optimize airport efficiency under different scenarios.
+The system follows a modular, N-tier architecture designed for scalability and real-time state synchronization.
+
+```mermaid
+graph TD
+    subgraph "Data & Preprocessing Layer"
+        A[Raw Datasets] --> B[Cleaning Pipeline]
+        B --> C[Feature Engineering]
+        C --> D[ML-Ready Artifacts]
+    end
+
+    subgraph "Machine Learning Layer"
+        D --> E[XGBoost: Delay Predictor]
+        D --> F[XGBoost: Satisfaction Classifier]
+        D --> G[LSTM: Traffic Forecaster]
+    end
+
+    subgraph "Simulation Engine (Digital Twin Core)"
+        E & F & G --> H[SimPy Event-Driven Engine]
+        H --> I[Queue & Gate Managers]
+        H --> J[Passenger & Flight Agents]
+    end
+
+    subgraph "Backend API (FastAPI)"
+        H --> K[Simulation Orchestrator]
+        E & F --> L[Real-time ML Inference]
+        K & L --> M[REST API Endpoints]
+    end
+
+    subgraph "Frontend Dashboard (Next.js)"
+        M --> N[Real-time KPI Dashboard]
+        M --> O[What-If Scenario Planner]
+        M --> P[Sim Visualization]
+    end
+```
 
 ---
 
-## 🎯 Key Features
+## 🧠 ML Model Specifications
 
-- ✈️ Flight delay prediction using ML models
-- 😊 Passenger satisfaction prediction
-- 📊 Passenger traffic forecasting (LSTM-based)
-- 🧠 What-if scenario simulation (counters, flights, delays)
-- 🏗️ Discrete-event simulation using SimPy
-- 📈 Interactive real-time dashboard (Next.js)
-- 🔄 End-to-end AI + simulation digital twin
+### 1. Flight Delay Prediction (XGBoost)
+- **Task:** Regression (Predicting `ARRIVAL_DELAY` in minutes).
+- **Key Features:** `congestion_score`, `rush_hour`, `TAXI_OUT`, `is_weekend`.
+- **Role:** Injects realistic perturbations into the simulation timeline.
 
----
+### 2. Passenger Satisfaction (XGBoost)
+- **Task:** Binary Classification (Satisfied vs. Dissatisfied).
+- **Key Features:** `customer_tolerance_index`, `service_quality_score`, `Age`, `Class`.
+- **Role:** Models agent sentiment based on real-time wait times in simulation queues.
 
-## 🧠 System Architecture
-
-- **Data Layer:** Kaggle aviation datasets
-- **Processing Layer:** Data cleaning & feature engineering
-- **ML Layer:** Prediction models (XGBoost, LSTM, etc.)
-- **Simulation Layer:** Airport flow simulation (SimPy)
-- **API Layer:** FastAPI backend
-- **Frontend Layer:** Next.js dashboard
-
----
-
-## 📊 Datasets Used
-
-- Flight Delay Dataset (Operations data)
-- Airline Passenger Satisfaction Dataset
-- Air Traffic Passenger Statistics Dataset
+### 3. Traffic Forecasting (LSTM)
+- **Task:** Time-Series Forecasting (Predicting monthly passenger counts).
+- **Architecture:** Multi-layer LSTM with Dropout for overfit prevention.
+- **Role:** Drives the "Master Load" generation for the simulation engine.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- Python
-- Pandas, NumPy
-- Scikit-learn, XGBoost
-- TensorFlow / Keras (LSTM)
-- SimPy (Simulation)
-- FastAPI
-- Next.js
-- Plotly / Matplotlib
+- **Core:** Python 3.9+, TypeScript
+- **ML/AI:** XGBoost, TensorFlow/Keras, Scikit-learn, Pandas, NumPy
+- **Simulation:** SimPy (Discrete Event Simulation)
+- **Backend:** FastAPI, Uvicorn, Pydantic, Joblib
+- **Frontend:** Next.js (App Router), TailwindCSS, Recharts, Lucide-React
 
 ---
 
-## 🔄 Workflow
+## 📂 Project Structure
 
-1. Data Collection (Kaggle datasets)
-2. Data Preprocessing & Cleaning
-3. Feature Engineering
-4. ML Model Training
-5. Simulation Engine Development
-6. API Integration
-7. Frontend Dashboard Visualization
-8. What-if Scenario Analysis
-
----
-
-## 📈 What-If Analysis
-
-Users can dynamically change:
-
-- Number of flights
-- Passenger arrival rate
-- Number of counters
-- Weather conditions
-- Delay duration
-
-System recalculates:
-
-- Queue lengths
-- Waiting times
-- Congestion levels
-- Overall airport performance
+```bash
+AI-Airport-Digital-Twin/
+├── backend_fastapi/        # REST API Layer
+│   ├── routes/             # API Endpoints (ML, Sim, What-If)
+│   ├── services/           # Business Logic (Model & Sim Orchestration)
+│   └── schemas/            # Pydantic Data Contracts
+├── ml_models/              # Machine Learning Suite
+│   ├── saved_models/       # Persistent Model Artifacts (.pkl, .h5)
+│   └── train_*.py          # Model Training Pipelines
+├── simulation/             # Discrete Event Simulation Core
+│   ├── engine/             # SimRunner & Clock Management
+│   ├── entities/           # Flight & Passenger Agents
+│   └── services/           # Queue & Gate Resource Managers
+├── preprocessing/          # Data Engineering Pipeline
+│   ├── clean_*.py          # Dataset Specific Cleaning
+│   ├── feature_eng.py      # Simulation-focused Feature Synthesis
+│   └── build_final.py      # Final ML-Ready Data Assembly
+├── datasets/               # Raw and Processed CSVs
+├── frontend_nextjs/        # Next.js Dashboard UI
+└── requirements.txt        # Full Project Dependencies
+```
 
 ---
 
-## 🧪 Machine Learning Models
+## 🚀 Setup & Installation
 
-- Flight Delay Prediction → Regression (XGBoost)
-- Passenger Satisfaction → Classification
-- Passenger Traffic Forecast → LSTM Time Series
+### 1. Environment Configuration
+```bash
+# Clone the repository
+git clone https://github.com/your-repo/ai-airport-twin.git
+cd ai-airport-twin
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/scripts/activate  # Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. Data Pipeline Execution
+Must be run sequentially to build the Digital Twin's data lake:
+```bash
+python preprocessing/clean_dataset_1.py
+python preprocessing/clean_dataset_2.py
+python preprocessing/clean_dataset_3.py
+python preprocessing/feature_engineering.py
+python preprocessing/build_final_datasets.py
+```
+
+### 3. Model Training
+```bash
+python ml_models/train_delay_model.py
+python ml_models/train_satisfaction_model.py
+python ml_models/train_traffic_model.py
+```
+
+### 4. Running the System
+```bash
+# Terminal 1: Start Backend
+uvicorn backend_fastapi.main:app --reload
+
+# Terminal 2: Start Frontend
+cd frontend_nextjs
+npm install
+npm run dev
+```
 
 ---
 
-## 📁 Project Structure
+## 📈 What-If Scenario Analysis
+
+The system allows you to manipulate real-world constraints via the dashboard:
+
+- **Resource Optimization:** Reduce `security_counters` from 5 to 2 to observe the impact on wait times and passenger churn.
+- **Demand Stress Test:** Increase `increase_flights_percent` by 30% to see where the airport bottlenecks first.
+- **Operational Resilience:** Add a `delay_offset_minutes` to simulate a global weather event and watch how AI predicts the drop in overall satisfaction scores.
+
+---
+
+## 🖼️ Screenshots (Simulated Previews)
+
+### 1. Executive KPI Dashboard
+*(A clean overview of active flights, average delay, and satisfaction trends)*
+> **[IMAGE_PLACEHOLDER: dashboard_view.png]**
+
+### 2. Live Simulation Visualizer
+*(Real-time passenger flow monitoring from Arrival to Boarding)*
+> **[IMAGE_PLACEHOLDER: simulation_flow.png]**
+
+### 3. What-If Scenario Comparison
+*(Side-by-side results showing the impact of reducing security staff)*
+> **[IMAGE_PLACEHOLDER: what_if_analysis.png]**
+
+---
+
+## 👨‍💻 Engineering Standards
+
+This project adheres to **Google-grade AI/ML standards**:
+- **Clean Architecture:** Separation of Concerns (Entities, Services, Routes).
+- **Data Contracts:** Strict Pydantic schemas for API integrity.
+- **Production-Ready ML:** Automated logging, persistence, and feature scaling.
+- **Modular Simulation:** Object-oriented agents for high-fidelity modeling.
