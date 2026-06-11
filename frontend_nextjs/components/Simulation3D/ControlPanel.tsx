@@ -10,20 +10,12 @@ const ControlPanel = () => {
   const [localParams, setLocalParams] = useState({
     increase_flights_percent: simParams.increase_flights_percent,
     security_counters: simParams.security_counters,
-    checkin_counters: simParams.checkin_counters || 10,
     delay_offset_minutes: simParams.delay_offset_minutes,
-    weather_severity: simParams.weather_severity || 0,
-    time_of_day: simParams.time_of_day || 12,
+    checkin_counters: 8,
   });
 
-  const handleUpdate = (key: string, val: any) => {
+  const handleUpdate = (key: string, val: number) => {
     setLocalParams(prev => ({ ...prev, [key]: val }));
-  };
-
-  const formatTime = (hour: number) => {
-    const h = hour % 12 || 12;
-    const ampm = hour < 12 ? 'AM' : 'PM';
-    return `${h}:00 ${ampm}`;
   };
 
   const handleExecute = () => {
@@ -43,25 +35,6 @@ const ControlPanel = () => {
       </div>
 
       <div className="space-y-6">
-        {/* Time of Day Modes */}
-        <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Environment Mode</label>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => handleUpdate('time_of_day', 12)}
-              className={`py-3 px-3 rounded-xl text-[10px] font-bold uppercase tracking-tight transition-all border ${localParams.time_of_day >= 6 && localParams.time_of_day <= 18 ? 'bg-amber-500 text-white border-amber-500 shadow-md scale-[1.02]' : 'bg-white text-slate-400 border-slate-100 hover:border-slate-200'}`}
-            >
-              Day Mode
-            </button>
-            <button
-              onClick={() => handleUpdate('time_of_day', 0)}
-              className={`py-3 px-3 rounded-xl text-[10px] font-bold uppercase tracking-tight transition-all border ${localParams.time_of_day < 6 || localParams.time_of_day > 18 ? 'bg-indigo-950 text-white border-indigo-950 shadow-md scale-[1.02]' : 'bg-white text-slate-400 border-slate-100 hover:border-slate-200'}`}
-            >
-              Night Mode
-            </button>
-          </div>
-        </div>
-
         {/* Traffic Load */}
         <div className="space-y-3">
           <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
@@ -79,23 +52,6 @@ const ControlPanel = () => {
           />
         </div>
 
-        {/* Check-In Counters */}
-        <div className="space-y-3">
-          <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
-            <span>Check-In Counters</span>
-            <span className="text-brand-600">{localParams.checkin_counters} Active</span>
-          </div>
-          <input 
-            type="range" 
-            min="1" 
-            max="20" 
-            step="1"
-            value={localParams.checkin_counters}
-            onChange={(e) => handleUpdate('checkin_counters', parseInt(e.target.value))}
-            className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-brand-600"
-          />
-        </div>
-
         {/* Security Lanes */}
         <div className="space-y-3">
           <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
@@ -105,7 +61,7 @@ const ControlPanel = () => {
           <input 
             type="range" 
             min="1" 
-            max="15" 
+            max="10" 
             step="1"
             value={localParams.security_counters}
             onChange={(e) => handleUpdate('security_counters', parseInt(e.target.value))}
@@ -113,29 +69,10 @@ const ControlPanel = () => {
           />
         </div>
 
-        {/* Weather Severity */}
-        <div className="space-y-3">
-          <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
-            <span>Weather Severity</span>
-            <span className={localParams.weather_severity > 50 ? "text-rose-500" : "text-sky-500"}>
-              {localParams.weather_severity > 70 ? "STORM" : localParams.weather_severity > 30 ? "CLOUDY" : "CLEAR"} ({localParams.weather_severity}%)
-            </span>
-          </div>
-          <input 
-            type="range" 
-            min="0" 
-            max="100" 
-            step="10"
-            value={localParams.weather_severity}
-            onChange={(e) => handleUpdate('weather_severity', parseInt(e.target.value))}
-            className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-brand-600"
-          />
-        </div>
-
         {/* Delay Offset */}
         <div className="space-y-3">
           <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
-            <span>Manual Delay</span>
+            <span>Injected Delay</span>
             <span className="text-brand-600">{localParams.delay_offset_minutes}m</span>
           </div>
           <input 

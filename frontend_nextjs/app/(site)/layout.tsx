@@ -67,11 +67,11 @@ export default function SiteLayout({
           {/* Action Button & Mobile Toggle */}
           <div className="flex items-center gap-4">
             <Link
-              href="/simulation"
+              href="/dashboard"
               className="hidden sm:flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl text-sm font-bold shadow-2xl shadow-slate-200 hover:bg-brand-600 hover:shadow-brand-100 hover:-translate-y-0.5 transition-all duration-300"
             >
               <LayoutDashboard className="w-4 h-4" />
-              <span>Launch Simulation</span>
+              <span>Launch Console</span>
             </Link>
             
             <button 
@@ -102,12 +102,12 @@ export default function SiteLayout({
             </Link>
           ))}
           <Link
-            href="/simulation"
+            href="/dashboard"
             onClick={() => setIsMenuOpen(false)}
             className="flex items-center justify-center gap-2 w-full py-4 bg-brand-600 text-white rounded-2xl text-base font-bold shadow-xl shadow-brand-100"
           >
             <LayoutDashboard className="w-5 h-5" />
-            Launch Simulation
+            Launch Console
           </Link>
         </div>
       </header>

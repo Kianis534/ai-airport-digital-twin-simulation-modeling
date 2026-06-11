@@ -100,7 +100,12 @@ const SimulationPage = () => {
         </div>
       </div>
 
-      <SimulationDashboard />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <MetricsCard title="Process Cycle" value={`${metrics.processingSpeed}s`} icon={Zap} description="Mean Time / Agent" />
+        <MetricsCard title="Allocated" value={`${metrics.activeResources}`} icon={Users} description="Active Counters" variant="slate" />
+        <MetricsCard title="Throughput" value={`${metrics.eventRate}`} icon={Activity} description="Events / Minute" variant="emerald" />
+        <MetricsCard title="Acceleration" value={`${metrics.simTimeScale}x`} icon={Clock} description="Sim Time Scale" />
+      </div>
     </div>
   );
 };
