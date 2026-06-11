@@ -2,7 +2,7 @@
 
 import React from 'react';
 import AirportMap from '@/components/AirportMap';
-import MetricsCard from '@/components/MetricsCard';
+import SimulationDashboard from '@/components/SimulationDashboard';
 import { 
   Activity, 
   Clock, 
