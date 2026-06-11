@@ -33,7 +33,7 @@ export default function HomePage() {
           </h1>
           
           <p className="text-lg md:text-2xl text-slate-400 font-medium max-w-3xl mx-auto leading-relaxed">
-            Harnessing <span className="text-slate-200 font-bold">SimPy</span> event modeling with <span className="text-slate-200 font-bold">LSTM</span> & <span className="text-slate-200 font-bold">XGBoost</span> to resolve real-world aviation bottlenecks before they happen.
+            A comprehensive <span className="text-brand-400">Digital Twin</span> ecosystem that uses <span className="text-slate-200 font-bold">LSTM</span> forecasting and <span className="text-slate-200 font-bold">XGBoost</span> intelligence to detect bottlenecks and provide real-time strategic advice.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
@@ -41,14 +41,14 @@ export default function HomePage() {
               href="/simulation"
               className="group w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-5 bg-brand-600 hover:bg-brand-500 text-white rounded-[2rem] text-lg font-black shadow-2xl shadow-brand-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-brand-500/40"
             >
-              View Simulation
+              Start Simulation
               <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              href="/simulation#live-metrics"
+              href="/graphs-stats"
               className="w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-[2rem] text-lg font-bold backdrop-blur-md transition-all duration-300"
             >
-              View Live Metrics
+              Live Analytics Suite
             </Link>
           </div>
         </div>
@@ -61,41 +61,41 @@ export default function HomePage() {
             N-Tier Intelligent Core
           </h2>
           <p className="text-slate-500 text-lg font-medium">
-            A multi-layered synchronization of data streams, neural networks, and event-driven kernels.
+            Seamlessly bridging the gap between 3D visualization, predictive modeling, and live operational feedback.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Card 1 */}
           <div className="group bg-white border border-slate-100 p-10 rounded-[3rem] shadow-sm hover:shadow-2xl hover:shadow-slate-200/50 hover:-translate-y-2 transition-all duration-500">
-            <div className="w-16 h-16 bg-brand-50 rounded-[1.5rem] flex items-center justify-center text-brand-600 mb-8 group-hover:scale-110 transition-transform duration-500">
+            <div className="w-16 h-16 bg-blue-50 rounded-[1.5rem] flex items-center justify-center text-blue-600 mb-8 group-hover:scale-110 transition-transform duration-500">
               <Activity className="w-8 h-8" />
             </div>
-            <h3 className="font-black text-2xl text-slate-900 mb-4 tracking-tight">SimPy Engine</h3>
+            <h3 className="font-black text-2xl text-slate-900 mb-4 tracking-tight">Event Twin</h3>
             <p className="text-slate-500 font-medium leading-relaxed">
-              Granular event-driven kernel modeling aircraft logistics, gate assignments, and passenger queue stochasticity.
+              High-fidelity SimPy kernel modeling every passenger's journey from check-in to boarding in a synchronized 3D space.
             </p>
           </div>
 
           {/* Card 2 */}
           <div className="group bg-white border border-slate-100 p-10 rounded-[3rem] shadow-sm hover:shadow-2xl hover:shadow-slate-200/50 hover:-translate-y-2 transition-all duration-500">
             <div className="w-16 h-16 bg-brand-50 rounded-[1.5rem] flex items-center justify-center text-brand-600 mb-8 group-hover:scale-110 transition-transform duration-500">
-              <Gauge className="w-8 h-8" />
+              <Sparkles className="w-8 h-8" />
             </div>
-            <h3 className="font-black text-2xl text-slate-900 mb-4 tracking-tight">XGBoost Predictors</h3>
+            <h3 className="font-black text-2xl text-slate-900 mb-4 tracking-tight">AI Advisor</h3>
             <p className="text-slate-500 font-medium leading-relaxed">
-              Real-time delay regression and satisfaction classification trained on millions of historical flight records.
+              Real-time bottleneck detection engine providing strategic counter-measures and operational suggestions as events unfold.
             </p>
           </div>
 
           {/* Card 3 */}
           <div className="group bg-white border border-slate-100 p-10 rounded-[3rem] shadow-sm hover:shadow-2xl hover:shadow-slate-200/50 hover:-translate-y-2 transition-all duration-500">
-            <div className="w-16 h-16 bg-brand-50 rounded-[1.5rem] flex items-center justify-center text-brand-600 mb-8 group-hover:scale-110 transition-transform duration-500">
+            <div className="w-16 h-16 bg-emerald-50 rounded-[1.5rem] flex items-center justify-center text-emerald-600 mb-8 group-hover:scale-110 transition-transform duration-500">
               <TrendingUp className="w-8 h-8" />
             </div>
-            <h3 className="font-black text-2xl text-slate-900 mb-4 tracking-tight">LSTM Forecasts</h3>
+            <h3 className="font-black text-2xl text-slate-900 mb-4 tracking-tight">Live Analytics</h3>
             <p className="text-slate-500 font-medium leading-relaxed">
-              Recurrent neural networks forecasting passenger load trends with high-confidence intervals for strategic planning.
+              7 dynamic time-series charts visualizing satisfaction curves, traffic volatility, and model-to-reality correlation mapping.
             </p>
           </div>
         </div>

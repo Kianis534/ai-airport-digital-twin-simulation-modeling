@@ -45,7 +45,7 @@ export default function AboutPage() {
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 bg-brand-600 rounded-full mt-2" />
-                <span><strong className="text-slate-800">Interactive Dashboard:</strong> Developing a real-time console for "What-If" scenario planning.</span>
+                <span><strong className="text-slate-800">Decision Support:</strong> Developing an active AI Advisor that resolves bottlenecks in real-time.</span>
               </li>
             </ul>
           </div>
@@ -58,10 +58,10 @@ export default function AboutPage() {
               <Award className="w-8 h-8 text-brand-400" />
             </div>
             <div>
-              <h3 className="font-black text-2xl mb-2 tracking-tight">Core Objective</h3>
+              <h3 className="font-black text-2xl mb-2 tracking-tight">Digital Twin Vision</h3>
               <p className="text-slate-400 text-sm leading-relaxed font-medium">
-                The primary goal is to provide a decision-support system that identifies operational bottlenecks 
-                before they manifest, allowing for optimized staffing and resource allocation in a virtual environment.
+                The objective was to create a "Live Twin"—a system that doesn't just show data, but actively participates 
+                in airport management through synchronized AI suggestions and predictive analytics.
               </p>
             </div>
           </div>
@@ -77,9 +77,9 @@ export default function AboutPage() {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { icon: Target, title: "Operational Fidelity", desc: "Modeling Terminal B queues with millisecond-level precision using SimPy." },
-            { icon: ShieldCheck, title: "Risk Mitigation", desc: "Predicting flight delays to proactively manage gate assignments." },
-            { icon: Award, title: "Aviation Excellence", desc: "Setting a benchmark for AI integration in airport management software." }
+            { icon: Target, title: "Synchronized KPI Feed", desc: "7 dynamic time-series charts providing real-time telemetry from the simulation core." },
+            { icon: ShieldCheck, title: "Intelligent Alerts", desc: "Automated bottleneck identification with actionable strategic recommendations." },
+            { icon: Award, title: "Aviation Excellence", desc: "A robust, scalable Digital Twin architecture setting a benchmark for AI integration." }
           ].map((item, i) => (
             <div key={i} className="bg-white border border-slate-100 p-8 rounded-[2.5rem] shadow-sm hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-2 transition-all duration-300 space-y-6 flex flex-col items-center text-center group">
               <div className="w-14 h-14 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-600 group-hover:scale-110 transition-transform">

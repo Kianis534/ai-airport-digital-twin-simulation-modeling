@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { ShieldAlert, Smile, LineChart, Timer, Database, Zap } from 'lucide-react';
 
 export default function ModelsPage() {
@@ -50,9 +51,26 @@ export default function ModelsPage() {
           <span className="text-brand-600">& Training Data.</span>
         </h1>
         <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto leading-relaxed">
-          Comprehensive details on the datasets, training speed, and inference performance of our neural core.
+          Comprehensive details on the datasets, training speed, and inference performance of our neural core. 
+          Each model is represented in real-time on our <a href="/graphs-stats" className="text-brand-600 font-black hover:underline underline-offset-4">Live Analytics Suite</a>.
         </p>
       </div>
+
+      {/* Integration Callout */}
+      <section className="bg-brand-600 text-white rounded-[3rem] p-10 md:p-14 shadow-2xl relative overflow-hidden">
+         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none" />
+         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="space-y-4 max-w-2xl">
+               <h2 className="text-3xl font-black tracking-tight leading-tight">Live Simulation Integration</h2>
+               <p className="text-brand-100 font-medium">
+                  Our models are not static experiments. The **LSTM** drives the passenger inflow rates in the 3D scene, while **XGBoost** provides the real-time latency and satisfaction metrics you see on the Graphs page. 
+               </p>
+            </div>
+            <Link href="/graphs-stats" className="px-10 py-5 bg-white text-brand-600 font-black rounded-2xl hover:bg-brand-50 transition-all shrink-0 shadow-xl">
+               PROVE THE CORRELATION
+            </Link>
+         </div>
+      </section>
 
       {/* Models Grid */}
       <section className="grid grid-cols-1 gap-12">

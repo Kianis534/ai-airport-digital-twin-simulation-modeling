@@ -32,6 +32,12 @@ export default function OverviewPage() {
       icon: LayoutDashboard,
       desc: "What: An interactive frontend. How: Next.js with React Context to provide a real-time monitoring feed and 'What-If' scenario controls.",
       details: ["Real-time KPI Feed", "Scenario Sandboxing", "Responsive UI"]
+    },
+    {
+      title: "Closed-Loop AI Advisor",
+      icon: Zap,
+      desc: "What: The decision-support layer. How: An active monitoring agent that cross-references live sim-telemetry with model thresholds to deliver actionable operational advice.",
+      details: ["Bottleneck Detection", "Strategic Suggestions", "Alert Synchronization"]
     }
   ];
 
@@ -97,11 +103,11 @@ export default function OverviewPage() {
         <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-brand-500/10 rounded-full -mr-48 -mt-48 blur-[120px]" />
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight">The Core Logic</h2>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight">The Proactive Core</h2>
             <p className="text-slate-400 text-lg leading-relaxed font-medium">
-              By combining <span className="text-brand-400">Simulation</span> (Real-time events) with 
-              <span className="text-white"> AI Prediction</span> (Future outcomes), we create a 
-              closed-loop system that continuously learns and optimizes itself.
+              By merging <span className="text-brand-400">Simulation</span> with 
+              <span className="text-white"> Real-Time AI Inference</span>, we create a 
+              proactive Digital Twin that not only models reality but actively suggests how to optimize it.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-6">
