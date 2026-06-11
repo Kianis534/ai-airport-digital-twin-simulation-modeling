@@ -5,17 +5,15 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { 
   Cpu, 
-  Code2, 
-  Layout, 
   Wind, 
-  Zap, 
-  Monitor,
+  Layout, 
   Box,
-  Layers,
   ArrowRight
 } from 'lucide-react';
 import ControlPanel from '@/components/Simulation3D/ControlPanel';
 import SimulationDashboard from '@/components/SimulationDashboard';
+import AIAdvisorPanel from '@/components/AIAdvisorPanel';
+import NotificationBell from '@/components/NotificationBell';
 
 // Load 3D Canvas dynamically to avoid SSR issues with Three.js
 const Simulation3DCanvas = dynamic(
@@ -66,19 +64,24 @@ export default function SimulationTechPage() {
   return (
     <div className="space-y-24 max-w-7xl mx-auto pb-20 animate-in fade-in slide-in-from-bottom-4 duration-1000">
       {/* Page Header */}
-      <div className="text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-50 text-brand-600 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
-          Interactive 3D Digital Twin
+      <div className="flex flex-col md:flex-row md:items-start justify-between gap-10">
+        <div className="text-center md:text-left space-y-6 flex-1">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-50 text-brand-600 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
+            Interactive 3D Digital Twin
+          </div>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter text-slate-900 leading-tight">
+            Live Airport <br className="hidden md:block" />
+            <span className="text-brand-600">Simulation.</span>
+          </h1>
+          <p className="text-slate-500 font-medium text-lg max-w-3xl leading-relaxed">
+            Manipulate infrastructure variables in real-time and observe how passenger flow, 
+            queues, and bottlenecks evolve in our high-fidelity 3D environment.
+          </p>
         </div>
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter text-slate-900 leading-tight">
-          Live Airport <br className="hidden md:block" />
-          <span className="text-brand-600">Simulation.</span>
-        </h1>
-        <p className="text-slate-500 font-medium text-lg max-w-3xl mx-auto leading-relaxed">
-          Manipulate infrastructure variables in real-time and observe how passenger flow, 
-          queues, and bottlenecks evolve in our high-fidelity 3D environment.
-        </p>
       </div>
+
+      {/* AI Advisor Panel */}
+      <AIAdvisorPanel />
 
       {/* Main Simulation Section */}
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">

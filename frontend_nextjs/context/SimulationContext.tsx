@@ -53,10 +53,22 @@ interface PassengerAgent {
   lastStageTime: number;
 }
 
+interface SimulationAlert {
+  id: string;
+  type: 'risk' | 'bottleneck' | 'suggestion' | 'info';
+  title: string;
+  message: string;
+  suggestion: string;
+  timestamp: string;
+  read: boolean;
+}
+
 interface SimulationContextType {
   metrics: SimulationMetrics;
   history: ChartPoint[];
   logs: string[];
+  alerts: SimulationAlert[];
+  activeAdvice: SimulationAlert | null;
   congestion: CongestionNode[];
   passengers: PassengerAgent[];
   activeStage: number;
@@ -70,6 +82,8 @@ interface SimulationContextType {
   setSimParams: React.Dispatch<React.SetStateAction<SimulationParams>>;
   setSimType: (type: 'international' | 'domestic') => void;
   setIsPlaying: (playing: boolean) => void;
+  markAlertAsRead: (id: string) => void;
+  clearAlerts: () => void;
   resetEnvironment: () => Promise<void>;
   runScenario: (params: any) => Promise<void>;
 }
@@ -85,10 +99,14 @@ export const SimulationProvider = ({ children }: { children: ReactNode }) => {
   const [isFlying, setIsFlying] = useState(false);
   const [isPlaneReady, setIsPlaneReady] = useState(true);
   const [logs, setLogs] = useState<string[]>([]);
+  const [alerts, setAlerts] = useState<SimulationAlert[]>([]);
+  const [activeAdvice, setActiveAdvice] = useState<SimulationAlert | null>(null);
   const [history, setHistory] = useState<ChartPoint[]>([]);
   const [passengers, setPassengers] = useState<PassengerAgent[]>([]);
   const [nextPassengerId, setNextPassengerId] = useState(0);
   const [planeTimer, setPlaneTimer] = useState(0);
+  
+  // ... (rest of state setup unchanged)
   
   const [congestion, setCongestion] = useState<CongestionNode[]>([
     { label: 'Check-In', value: 0, color: 'bg-orange-400' },
@@ -119,6 +137,12 @@ export const SimulationProvider = ({ children }: { children: ReactNode }) => {
     simTimeScale: '1.0x'
   });
 
+  const markAlertAsRead = (id: string) => {
+    setAlerts(prev => prev.map(a => a.id === id ? { ...a, read: true } : a));
+  };
+
+  const clearAlerts = () => setAlerts([]);
+
   useEffect(() => {
     setHasMounted(true);
     setMetrics(prev => ({ ...prev, timestamp: new Date().toLocaleTimeString() }));
@@ -134,6 +158,7 @@ export const SimulationProvider = ({ children }: { children: ReactNode }) => {
 
       // 1. Update Simulation State
       setPassengers(prevPassengers => {
+        // ... (spawning and processing logic unchanged)
         // Spawning Logic
         let updated = [...prevPassengers];
         const spawnRate = Math.floor(1 + (simParams.increase_flights_percent / 25) + Math.random());
@@ -180,9 +205,10 @@ export const SimulationProvider = ({ children }: { children: ReactNode }) => {
         }).filter(p => !(p.stage === 6 && isFlying));
       });
 
-      // 2. Update Metrics & History (Atomic update)
+      // 2. Update Metrics, History & AI Advisor
       setPassengers(currentPax => {
         setMetrics(prevM => {
+          // ... (metrics calculation unchanged)
           const securityCapacity = simParams.security_counters * 10;
           const baseLatency = 10 + simParams.delay_offset_minutes + (simParams.weather_severity / 2);
           const congestionPenalty = Math.max(0, (currentPax.length - securityCapacity) * 1.5);
@@ -200,7 +226,61 @@ export const SimulationProvider = ({ children }: { children: ReactNode }) => {
             eventRate: Math.floor((currentPax.length / 10) * (2 + Math.random())),
           };
 
-          // Update History inside metrics update to ensure synchronization
+          // AI Advisor Live Synchronization Logic
+          const checkInCount = currentPax.filter(p => p.stage === 1).length;
+          const securityCount = currentPax.filter(p => p.stage === 2).length;
+          const boardingCount = currentPax.filter(p => p.stage === 4 || p.stage === 5).length;
+
+          const newAlerts: SimulationAlert[] = [];
+          let currentLiveAdvice: SimulationAlert | null = null;
+
+          if (checkInCount > 25) {
+            currentLiveAdvice = {
+              id: `live-ci-${Date.now()}`,
+              type: 'bottleneck',
+              title: 'Check-In Congestion',
+              message: `Queue at Check-In has reached ${checkInCount} passengers.`,
+              suggestion: 'Increase Check-In counters by 2 to distribute the load.',
+              timestamp: timeStr,
+              read: false
+            };
+            newAlerts.push(currentLiveAdvice);
+          } else if (securityCount > 15) {
+            currentLiveAdvice = {
+              id: `live-sec-${Date.now()}`,
+              type: 'risk',
+              title: 'Security Bottleneck',
+              message: `High density detected at Security Scanners (${securityCount} pax).`,
+              suggestion: 'Deploy Advanced Imaging technology or open an extra security lane.',
+              timestamp: timeStr,
+              read: false
+            };
+            newAlerts.push(currentLiveAdvice);
+          } else if (newSat < 75) {
+            currentLiveAdvice = {
+              id: `live-sat-${Date.now()}`,
+              type: 'suggestion',
+              title: 'Passenger Dissatisfaction',
+              message: `Average satisfaction has dropped to ${newSat}%.`,
+              suggestion: 'Reduce flight inflow or improve resource allocation immediately.',
+              timestamp: timeStr,
+              read: false
+            };
+            newAlerts.push(currentLiveAdvice);
+          }
+
+          // Update LIVE Advisor Panel
+          setActiveAdvice(currentLiveAdvice);
+
+          // Update Historical Log (Bell Icon)
+          if (newAlerts.length > 0) {
+            setAlerts(prev => {
+              const filtered = newAlerts.filter(na => !prev.some(pa => pa.title === na.title && !pa.read));
+              return [...filtered, ...prev].slice(0, 10);
+            });
+          }
+
+          // ... (history update logic unchanged)
           setHistory(prevH => {
             const waitTimes = [
               { range: '0-2s', count: 0 }, { range: '2-5s', count: 0 },
@@ -234,7 +314,7 @@ export const SimulationProvider = ({ children }: { children: ReactNode }) => {
           return newMetrics;
         });
 
-        // Update Congestion
+        // ... (congestion update logic unchanged)
         setCongestion(prevC => prevC.map(node => {
           const stagePax = currentPax.filter(p => {
             if (node.label === 'Check-In') return p.stage === 1;
@@ -269,12 +349,13 @@ export const SimulationProvider = ({ children }: { children: ReactNode }) => {
     setIsResetting(true);
     await new Promise(resolve => setTimeout(resolve, 800));
     setPassengers([]);
-    setHistory([]); // Clear history on reset
+    setHistory([]); 
+    setAlerts([]); // Clear alerts on reset
     setNextPassengerId(0);
     setPlaneTimer(0);
     setIsPlaneReady(true);
     setIsFlying(false);
-    setActiveStage(0); // Reset active stage
+    setActiveStage(0); 
     setSimParams({
       increase_flights_percent: 0,
       security_counters: 5,
@@ -320,8 +401,8 @@ export const SimulationProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <SimulationContext.Provider value={{
-      metrics, history, logs, congestion, passengers, activeStage, simType, isFlying, isPlaneReady, isPlaying, isResetting, hasMounted, simParams,
-      setSimParams, setSimType, setIsPlaying, resetEnvironment, runScenario
+      metrics, history, logs, alerts, activeAdvice, congestion, passengers, activeStage, simType, isFlying, isPlaneReady, isPlaying, isResetting, hasMounted, simParams,
+      setSimParams, setSimType, setIsPlaying, markAlertAsRead, clearAlerts, resetEnvironment, runScenario
     }}>
       {children}
     </SimulationContext.Provider>
